@@ -9,6 +9,16 @@
 
 enkel design
 
+Vad kommer vi att behöva:
+- Skapa en hero som vi kan styra
+- Vi behöver fiender, småbanker
+- Scoremätare
+- Coins
+- Timer/countdown - hastigheten ökar var 10e sekund
+- Efter 10 hus höjs lägstanivån för husen
+- Game over - high score
+
+
 
 
 Tips:
