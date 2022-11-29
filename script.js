@@ -4,15 +4,35 @@ let game = document.getElementById("game");
 let bottom = 0;
 let left = 0;
 
+function jump () {
+    let timer = setInterval(() => {
+        bottom += 20;
+        hero.style.bottom = bottom + "px";
+        if (bottom >= 200) {
+             clearInterval (timer);
+            let down = setInterval(() => { 
+                bottom -=20;
+                hero.style.bottom = bottom + "px";   
+            if (bottom <= 50) {
+            clearInterval (down);
+         }   
+         }, 100);
+        
+            
+        
+        }
+    }, 100);
+}
+
 document.addEventListener("keyup", (e) => {
     //console.log("e", e.key);
 
+    //hero movement//
     switch (e.key) {
         case "w":
         case "ArrowUp":
-            //function jump();
-            bottom += 100;
-            hero.style.bottom = bottom + "px";
+            jump();
+            //bottom += 100;
             break;
 
         case "s":
@@ -21,6 +41,8 @@ document.addEventListener("keyup", (e) => {
             bottom -= 20;
             hero.style.bottom = bottom + "px";
             break;
+
+        
 
         // TODO: BUGG i hitbox när vi rört oss i sidled
 
