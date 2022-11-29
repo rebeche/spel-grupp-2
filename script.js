@@ -46,19 +46,19 @@ function createEnemy() {
     let enemy = document.createElement("div");
     enemy.innerHTML = "₿"
     enemy.classList = "enemy";
-    let enemyLeft = 500;
+    let enemyLeft = 100;
     let enemyBottom = Math.round(Math.round(Math.random() * 500) / 10) * 10;
     //console.log(enemyBottom);
     // Math.round(Math.floor(Math.random() * (500 - 1)/10)*10)
 
 
-    enemy.style.left = enemyLeft + "px";
+    enemy.style.left = enemyLeft + "%";
     enemy.style.bottom = enemyBottom + "px";
     enemy.id = enemyId;
 
     let move = setInterval(() => {
         enemyLeft -= 1;
-        enemy.style.left = enemyLeft + "px";
+        enemy.style.left = enemyLeft + "%";
 
         if (enemyBottom > bottom && enemyBottom < bottom + 150 && enemyLeft === left) {
             console.log("HIT");
@@ -76,13 +76,13 @@ function createEnemy() {
 
         }
 
-        if (enemyLeft <= -50) {
+        if (enemyLeft < 0) {
             clearInterval(move);
             enemy.remove();
             createEnemy();
         }
 
-    }, 10)
+    }, 100)
 
     game.appendChild(enemy);
 }
