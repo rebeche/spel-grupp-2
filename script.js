@@ -110,3 +110,8 @@ function createEnemy() {
 }
 
 createEnemy();
+
+//collision detection (hitboxen), 
+//koppla collision till score
+//skapa fiene och döpa om vår nuvarande fiende till BTC, eller döp nya til bank.
+//fixa höjd på alla mynt
