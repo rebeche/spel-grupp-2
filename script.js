@@ -1,25 +1,27 @@
 let hero = document.getElementById("hero");
 let game = document.getElementById("game");
+let scoreDiv = document.getElementById("scoreDiv");
 
 let bottom = 0;
 let left = 0;
+let score = 0;
 
-function jump () {
+function jump() {
     let timer = setInterval(() => {
         bottom += 20;
         hero.style.bottom = bottom + "px";
-        if (bottom >= 200) {
-             clearInterval (timer);
-            let down = setInterval(() => { 
-                bottom -=20;
-                hero.style.bottom = bottom + "px";   
-            if (bottom <= 50) {
-            clearInterval (down);
-         }   
-         }, 100);
-        
-            
-        
+        if (bottom >= 300) {
+            clearInterval(timer);
+            let down = setInterval(() => {
+                bottom -= 20;
+                hero.style.bottom = bottom + "px";
+                if (bottom <= 50) {
+                    clearInterval(down);
+                }
+            }, 100);
+
+
+
         }
     }, 100);
 }
@@ -35,14 +37,14 @@ document.addEventListener("keyup", (e) => {
             //bottom += 100;
             break;
 
-        case "s":
-        case "ArrowDown":
+        // case "s":
+        //case "ArrowDown":
 
-            bottom -= 20;
-            hero.style.bottom = bottom + "px";
-            break;
+        // bottom -= 20;
+        //hero.style.bottom = bottom + "px";
+        //break;
 
-        
+
 
         // TODO: BUGG i hitbox när vi rört oss i sidled
 
@@ -61,15 +63,72 @@ document.addEventListener("keyup", (e) => {
     }
 })
 
+let BtcId = 0;
+
+function createBtc() {
+    BtcId++
+    let Btc = document.createElement("div");
+    Btc.innerHTML = "₿"
+    Btc.classList = "Btc";
+    let BtcLeft = 100;
+    let BtcBottom = (Math.round(Math.round(Math.random() * 280) / 10) * 10) + 100;
+    //console.log(BtcBottom);
+    // Math.round(Math.floor(Math.random() * (500 - 1)/10)*10)
+
+
+    Btc.style.left = BtcLeft + "%";
+    Btc.style.bottom = BtcBottom + "px";
+    Btc.id = BtcId;
+
+    let move = setInterval(() => {
+        BtcLeft -= 1;
+        Btc.style.left = BtcLeft + "%";
+
+        if (BtcBottom > bottom && BtcBottom < bottom + 150 && BtcLeft === left) {
+            console.log("HIT");
+            score++;
+            scoreDiv.innerHTML = "Score " + score;
+
+
+            let dead = setInterval(() => {
+                hero.style.backgroundColor = "red";
+
+                let resurect = setInterval(() => {
+                    hero.style.backgroundColor = "purple"
+                    clearInterval(dead)
+                }, 100)
+
+            }, 100)
+
+
+        }
+
+        if (BtcLeft < 0) {
+            clearInterval(move);
+            Btc.remove();
+
+        }
+
+    }, 100)
+
+    game.appendChild(Btc);
+}
+
+
+setInterval(() => {
+    createBtc();
+
+}, 1000);
+
+
 let enemyId = 0;
 
 function createEnemy() {
     enemyId++
     let enemy = document.createElement("div");
-    enemy.innerHTML = "₿"
     enemy.classList = "enemy";
     let enemyLeft = 100;
-    let enemyBottom = Math.round(Math.round(Math.random() * 500) / 10) * 10;
+    let enemyBottom = 30;
     //console.log(enemyBottom);
     // Math.round(Math.floor(Math.random() * (500 - 1)/10)*10)
 
@@ -101,7 +160,7 @@ function createEnemy() {
         if (enemyLeft < 0) {
             clearInterval(move);
             enemy.remove();
-            createEnemy();
+
         }
 
     }, 100)
@@ -109,9 +168,10 @@ function createEnemy() {
     game.appendChild(enemy);
 }
 
-createEnemy();
+setInterval(() => {
+    createEnemy();
+
+}, 4000);
+
 
 //collision detection (hitboxen), 
-//koppla collision till score
-//skapa fiene och döpa om vår nuvarande fiende till BTC, eller döp nya til bank.
-//fixa höjd på alla mynt
