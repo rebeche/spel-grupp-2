@@ -26,6 +26,8 @@ function jump() {
     }, 100);
 }
 
+
+
 document.addEventListener("keyup", (e) => {
     //console.log("e", e.key);
 
@@ -83,35 +85,50 @@ function createBtc() {
     let move = setInterval(() => {
         BtcLeft -= 1;
         Btc.style.left = BtcLeft + "%";
-
-        if (BtcBottom > bottom && BtcBottom < bottom + 150 && BtcLeft === left) {
+        // bottom på janne+höjden < bottom på btc 
+        // left på janne+bredden < left på btc 
+        // bottom på janne > bottom på btc+höjden 
+        // left på janne > left på btc+bredden
+        if (bottom + 100 < BtcBottom ||
+            left + 100 < BtcLeft ||
+            bottom > BtcBottom + 50 ||
+            left > BtcLeft + 50) {
+            console.log("no hit");
+        } else {
             console.log("HIT");
             score++;
             scoreDiv.innerHTML = "Score " + score;
-
-
-            let dead = setInterval(() => {
-                hero.style.backgroundColor = "red";
-
-                let resurect = setInterval(() => {
-                    hero.style.backgroundColor = "purple"
-                    clearInterval(dead)
-                }, 100)
-
-            }, 100)
-
-
-        }
-
-        if (BtcLeft < 0) {
-            clearInterval(move);
             Btc.remove();
-
         }
+    }, 100)
+
+
+
+
+
+
+    //let dead = setInterval(() => {
+    //  hero.style.backgroundColor = "red";
+
+    //let resurect = setInterval(() => {
+    //  hero.style.backgroundColor = "purple"
+    //clearInterval(dead)
+    // }, 100)
+
+    //}, 100)
+
+
+}
+
+if (BtcLeft < 0) {
+    clearInterval(move);
+    Btc.remove();
+
+}
 
     }, 100)
 
-    game.appendChild(Btc);
+game.appendChild(Btc);
 }
 
 
@@ -168,10 +185,10 @@ function createEnemy() {
     game.appendChild(enemy);
 }
 
-setInterval(() => {
-    createEnemy();
+//setInterval(() => {
+  //  createEnemy();
 
-}, 4000);
+//}, 4000);
 
 
 //collision detection (hitboxen), 

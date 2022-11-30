@@ -16,7 +16,7 @@
 
 }
 
-.enemy {
+.Btc {
 
 
 
@@ -40,6 +40,17 @@
     border: 2px dashed lightgoldenrodyellow;
 }
 
+.enemy {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background-image: url('/Bank.png');
+    background-size: contain;
+
+}
+
 body {
     background-color: lightblue;
     margin: 0;
@@ -54,7 +65,7 @@ body {
     background-color: green;
 }
 
-#score {
+#scoreDiv {
     font-size: 3rem;
     margin-top: 50px;
     margin-left: 50px;
