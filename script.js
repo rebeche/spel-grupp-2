@@ -2,28 +2,25 @@ let hero = document.getElementById("hero");
 let game = document.getElementById("game");
 let scoreDiv = document.getElementById("scoreDiv");
 
-let bottom = 0;
-let left = 0;
+let bottom = 50;
+let left = 500;
 let score = 0;
 
 function jump() {
     let timer = setInterval(() => {
-        bottom += 20;
+        bottom += 1;
         hero.style.bottom = bottom + "px";
         if (bottom >= 300) {
             clearInterval(timer);
             let down = setInterval(() => {
-                bottom -= 20;
+                bottom -= 1;
                 hero.style.bottom = bottom + "px";
                 if (bottom <= 50) {
                     clearInterval(down);
                 }
-            }, 100);
-
-
-
+            }, 1);
         }
-    }, 100);
+    }, 1);
 }
 
 
@@ -77,7 +74,6 @@ function createBtc() {
     //console.log(BtcBottom);
     // Math.round(Math.floor(Math.random() * (500 - 1)/10)*10)
 
-
     Btc.style.left = BtcLeft + "%";
     Btc.style.bottom = BtcBottom + "px";
     Btc.id = BtcId;
@@ -85,16 +81,21 @@ function createBtc() {
     let move = setInterval(() => {
         BtcLeft -= 1;
         Btc.style.left = BtcLeft + "%";
+
         // bottom på janne+höjden < bottom på btc 
         // left på janne+bredden < left på btc 
         // bottom på janne > bottom på btc+höjden 
         // left på janne > left på btc+bredden
-        if (bottom + 100 < BtcBottom ||
-            left + 100 < BtcLeft ||
-            bottom > BtcBottom + 50 ||
-            left > BtcLeft + 50) {
+
+        if (bottom + 100 < BtcBottom || //btc ska kunna gå över janne
+            left + 100 < BtcLeft || //btc ska kunna gå höger om janne
+            bottom > BtcBottom + 50 || //btc ska kunna gå under janne
+            left > BtcLeft + 50) //btc ska kunna gå vänster om janne
+
+        {
             console.log("no hit");
-        } else {
+        }
+        else {
             console.log("HIT");
             score++;
             scoreDiv.innerHTML = "Score " + score;
@@ -102,33 +103,12 @@ function createBtc() {
         }
     }, 100)
 
+    if (BtcLeft < 0) {
+        clearInterval(move);
+        Btc.remove();
+    }
 
-
-
-
-
-    //let dead = setInterval(() => {
-    //  hero.style.backgroundColor = "red";
-
-    //let resurect = setInterval(() => {
-    //  hero.style.backgroundColor = "purple"
-    //clearInterval(dead)
-    // }, 100)
-
-    //}, 100)
-
-
-}
-
-if (BtcLeft < 0) {
-    clearInterval(move);
-    Btc.remove();
-
-}
-
-    }, 100)
-
-game.appendChild(Btc);
+    game.appendChild(Btc);
 }
 
 

@@ -6,7 +6,7 @@
     /* text-align: center; */
     position: absolute;
     bottom: 50px;
-    left: 50px;
+    left: 500px;
     height: 100px;
     width: 100px;
 
@@ -52,6 +52,7 @@
 }
 
 body {
+    overflow: hidden;
     background-color: lightblue;
     margin: 0;
     font-family: monospace;
