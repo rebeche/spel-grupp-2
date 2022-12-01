@@ -7,7 +7,10 @@ let gameSpeed = 4;
 
 let hero = document.getElementById("hero");
 let game = document.getElementById("game");
+let gameOver = document.getElementById("gameOver");
 let scoreDiv = document.getElementById("scoreDiv");
+
+gameOver.style.display = "none";
 
 let bottom = 50;
 let left = 500;
@@ -113,88 +116,80 @@ function createBtc() {
         BtcLeft -= 15;
         Btc.style.left = BtcLeft + "px";
 
-        // bottom på janne+höjden < bottom på btc 
-        // left på janne+bredden < left på btc 
-        // bottom på janne > bottom på btc+höjden 
-        // left på janne > left på btc+bredden
-
-        if ((BtcLeft > left && BtcLeft < left + 100) &&
-            (BtcBottom > bottom && BtcBottom < bottom+100)
-            )
-            
-            // bottom + 100 < BtcBottom || //btc ska kunna gå över janne
-            // left + 100 < BtcLeft || //btc ska kunna gå höger om janne
-            // bottom > BtcBottom + 50 || //btc ska kunna gå under janne
-            // left > BtcLeft + 50) //btc ska kunna gå vänster om janne
+        if (BtcLeft > left && BtcLeft < left + 100 &&
+            BtcBottom > bottom && BtcBottom < bottom+100)
         {
-            console.log("hit");
-            score++;
-            scoreDiv.innerHTML = "Score " + score;
-            Btc.remove();
+        console.log("hit");
+        Btc.remove();
+        score++;
+        scoreDiv.innerHTML = "Score " + score;
         }
         else {
-        }
+            if (BtcLeft < 0) {
+                clearInterval(move);
+                Btc.remove();
+            }
+        }            
     }, 100)
-
-    if (BtcLeft < 0) {
-        clearInterval(move);
-        Btc.remove();
-    }
     game.appendChild(Btc);
 }
 
-setInterval(() => {
+let createBtcs = setInterval(() => {
     createBtc();
-
 }, 1000);
 
-
 let enemyId = 0;
-
 function createEnemy() {
     enemyId++
     let enemy = document.createElement("div");
     enemy.classList = "enemy";
     let enemyLeft = 1400;
     let enemyBottom = 60;
-    //console.log(enemyBottom);
-    // Math.round(Math.floor(Math.random() * (500 - 1)/10)*10)
 
     enemy.style.left = enemyLeft + "px";
     enemy.style.bottom = enemyBottom + "px";
     enemy.id = enemyId;
 
     let move = setInterval(() => {
-        enemyLeft -= 1;
+        enemyLeft -= 100;
         enemy.style.left = enemyLeft + "px";
 
         if (enemyBottom > bottom && enemyBottom < bottom + 150 && enemyLeft === left) {
-            console.log("HIT");
-
-            let dead = setInterval(() => {
-                hero.style.backgroundColor = "red";
-
-                let resurrect = setInterval(() => {
-                    hero.style.backgroundColor = "purple"
-                    clearInterval(dead)
-                }, 100)
-
-            }, 100)
+            console.log("HIT");            
+            hero.style.backgroundColor = "red";
+            clearInterval(createEnemies);
+            clearInterval(createBtcs);
+            clearInterval(move);
+            gameOver.style.display = "block";
+            gameOver.innerHTML = "Game Over";
 
         }
-        // if (enemyLeft < 0) {
-        //     clearInterval(move);
-        //     enemy.remove();
-        // }
+        if (enemyLeft < 0) {
+            clearInterval(move);
+            enemy.remove();
+        }
 
     }, 100)
     game.appendChild(enemy);
 }
 
-//setInterval(() => {
-  //  createEnemy();
+let createEnemies = setInterval(() => {
+    createEnemy();
 
-//}, 4000);
+}, 4000);
 
 
 //collision detection (hitboxen), 
+
+
+        // bottom på janne+höjden < bottom på btc 
+        // left på janne+bredden < left på btc 
+        // bottom på janne > bottom på btc+höjden 
+        // left på janne > left på btc+bredden
+            
+            // left = x bottom = y
+
+            //  Gamla varianten: // bottom + 100 < BtcBottom || //btc ska kunna gå över janne
+                    // left + 100 < BtcLeft || //btc ska kunna gå höger om janne
+                    // bottom > BtcBottom + 50 || //btc ska kunna gå under janne
+                    // left > BtcLeft + 50) //btc ska kunna gå vänster om janne

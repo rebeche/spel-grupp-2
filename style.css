@@ -44,13 +44,13 @@
 }
 
 .enemy {
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     position: absolute;
     bottom: 0px;
     left: 0px;
     background-image: url('/Bank.png');
-    background-size: contain;
+    background-size:contain;
 
 }
 
@@ -76,4 +76,16 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
     padding: 20px;
     width: 250px;
+}
+
+#gameOver {
+    position: absolute;
+    width: 500px;
+    height: auto;
+    background-color: white;
+    border-radius: 6px;
+    margin-left: 450px;
+    align-items: center;
+    text-align: center;
+    font-size: 80px;
 }
