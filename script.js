@@ -56,7 +56,7 @@ const gameObjects = [, layer4, layer7, layer3];
 
 function animate(){
     ctx.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
-gameObjects.forEach(object => {
+    gameObjects.forEach(object => {
     object.update();
     object.draw();
 })

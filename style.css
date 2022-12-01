@@ -56,7 +56,7 @@
 
 body {
     overflow: hidden;
-    background-color: lightblue;
+    background-color: rgb(3, 3, 3);
     margin: 0;
     font-family: monospace;
 }
