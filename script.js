@@ -1,3 +1,9 @@
+const canvas = document.getElementById('canvas1');
+const ctx = canvas.getContext('2d');
+const CANVAS_WIDTH = canvas.width = 2000;
+const CANVAS_HEIGHT = canvas.height = 700;
+let gameSpeed = 5;
+
 let hero = document.getElementById("hero");
 let game = document.getElementById("game");
 let scoreDiv = document.getElementById("scoreDiv");
@@ -5,6 +11,59 @@ let scoreDiv = document.getElementById("scoreDiv");
 let bottom = 50;
 let left = 500;
 let score = 0;
+
+const backgroundLayer3 = new Image();
+backgroundLayer3.src = 'layer3.png'
+const backgroundLayer4 = new Image();
+backgroundLayer4.src = 'layer4.png'
+const backgroundLayer7 = new Image();
+backgroundLayer7.src = 'layer7.png'
+
+class Layer {
+    constructor(image, speedModifier){
+        this.x = 0;
+        this.y = 0;
+        this.width = 2400;
+        this.height = 700;
+        this.x2 = this.width;
+        this.image = image;
+        this.speedModifier = speedModifier;
+        this.speed = gameSpeed * this.speedModifier; //Kopplas till globala speed
+    }
+    update(){
+        this.speed = gameSpeed * this.speedModifier;
+        if (this.x <= -this.width) {
+            this.x = this.width + this.x2 - this.speed;
+        }
+        if (this.x2 <= -this.width) {
+            this.x2 = this.width + this.x - this.speed;
+        }
+        this.x = Math.floor(this.x - this.speed);
+        this.x2 = Math.floor(this.x2 - this.speed);
+    }
+    draw(){
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x2, this.y, this.width, this.height);
+    }
+
+}
+
+const layer3 = new Layer(backgroundLayer3, 0.5);
+const layer4 = new Layer(backgroundLayer4, 0.3);
+const layer7 = new Layer(backgroundLayer7, 0);
+
+const gameObjects = [, layer4, layer7, layer3];
+
+function animate(){
+    ctx.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+gameObjects.forEach(object => {
+    object.update();
+    object.draw();
+})
+    requestAnimationFrame(animate);
+
+};
+animate();
 
 function jump() {
     let timer = setInterval(() => {
@@ -22,8 +81,6 @@ function jump() {
         }
     }, 1);
 }
-
-
 
 document.addEventListener("keyup", (e) => {
     //console.log("e", e.key);
@@ -91,7 +148,6 @@ function createBtc() {
             left + 100 < BtcLeft || //btc ska kunna gå höger om janne
             bottom > BtcBottom + 50 || //btc ska kunna gå under janne
             left > BtcLeft + 50) //btc ska kunna gå vänster om janne
-
         {
             console.log("no hit");
         }
@@ -144,20 +200,17 @@ function createEnemy() {
             let dead = setInterval(() => {
                 hero.style.backgroundColor = "red";
 
-                let resurect = setInterval(() => {
+                let resurrect = setInterval(() => {
                     hero.style.backgroundColor = "purple"
                     clearInterval(dead)
                 }, 100)
 
             }, 100)
 
-
         }
-
         if (enemyLeft < 0) {
             clearInterval(move);
             enemy.remove();
-
         }
 
     }, 100)
