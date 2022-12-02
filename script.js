@@ -151,7 +151,7 @@ function createEnemy() {
     enemy.id = enemyId;
 
     let move = setInterval(() => {
-        enemyLeft -= 100;
+        enemyLeft -= 30;
         enemy.style.left = enemyLeft + "px";
 
         if (enemyBottom > bottom && enemyBottom < bottom + 150 && enemyLeft === left) {
@@ -176,7 +176,7 @@ function createEnemy() {
 let createEnemies = setInterval(() => {
     createEnemy();
 
-}, 4000);
+}, 6000);
 
 
 //collision detection (hitboxen), 
